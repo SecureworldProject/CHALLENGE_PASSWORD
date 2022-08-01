@@ -53,10 +53,16 @@ def executeChallenge():
     mode= props_dict["mode"]
 
     if (mode=="parental"):
-        if (clave==correcta):
+        for i in range (0,2): # 3 intentos        
+            if (clave==correcta):
+                cad="%d"%(0)
+                break
+            else:
+                clave = easygui.enterbox("enter password", "chpass", "")
+                
+        if (clave!=correcta):
             cad="%d"%(1)
-        else:
-            cad="%d"%(0)
+            
     else:#modo no parental
         cad=clave
     
