@@ -62,6 +62,8 @@ def executeChallenge():
                 
         if (clave!=correcta):
             cad="%d"%(1)
+        else :
+            cad="%d"%(0)
             
     else:#modo no parental
         cad=clave
