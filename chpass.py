@@ -19,6 +19,9 @@ def init(props):
     
     #props es un diccionario
     props_dict= props
+
+    return 0
+    """
     res=executeChallenge()
     #check len retornada 
     if (res[1]>0):
@@ -26,7 +29,7 @@ def init(props):
     else:
         #no se ha podido ejecutar
         return -1
-
+    """
 
 
 def executeChallenge():
