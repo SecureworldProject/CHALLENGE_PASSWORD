@@ -47,7 +47,8 @@ def executeChallenge():
     clave = easygui.enterbox("enter password", "chpass", "")
 
     #mecanismo lock
-    os.remove(folder+"/"+"lock")
+    if os.path.exists(folder+"/"+"lock"):
+        os.remove(folder+"/"+"lock")
     
     #ahora comparamos con la correcta
     correcta=props_dict["param1"]
@@ -58,15 +59,15 @@ def executeChallenge():
     if (mode=="parental"):
         for i in range (0,2): # 3 intentos        
             if (clave==correcta):
-                cad="%d"%(0)
+                cad="\0" #bytearray(0) #"%d"%(0)
                 break
             else:
                 clave = easygui.enterbox("enter password", "chpass", "")
                 
         if (clave!=correcta):
-            cad="%d"%(1)
+            cad="\1" #"%d"%(1)
         else :
-            cad="%d"%(0)
+            cad="\0" #"%d"%(0)
             
     else:#modo no parental
         cad=clave
@@ -87,5 +88,5 @@ if __name__ == "__main__":
     #mode "parental" o "normal"
     midict={"param1": "clavesecreta", "mode":"parental"}
     init(midict)
-    #executeChallenge()
+    executeChallenge()
 
