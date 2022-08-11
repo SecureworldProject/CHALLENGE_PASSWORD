@@ -7,6 +7,8 @@ import time
 #pip3 install easygui
 # o bien py -m pip install easygui
 import easygui 
+import lock
+
 
 # variables globales
 # ------------------
@@ -38,18 +40,22 @@ def executeChallenge():
     
     #mecanismo de lock BEGIN, para garantizar una sola interaccion con user a la vez
     #-----------------------
+    lock.lockIN("chpass")
+    """
     folder=os.environ['SECUREMIRROR_CAPTURES']
     while os.path.exists(folder+"/"+"lock"):
         time.sleep(1)
     Path(folder+"/"+"lock").touch()
-
+    """
     #pedimos password
     clave = easygui.enterbox("enter password", "chpass", "")
 
-    #mecanismo lock
+    #mecanismo lock out
+    lock.lockOUT("chpass")
+    """
     if os.path.exists(folder+"/"+"lock"):
         os.remove(folder+"/"+"lock")
-    
+    """
     #ahora comparamos con la correcta
     correcta=props_dict["param1"]
 
