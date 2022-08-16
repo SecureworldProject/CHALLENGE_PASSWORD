@@ -57,7 +57,7 @@ def executeChallenge():
         os.remove(folder+"/"+"lock")
     """
     #ahora comparamos con la correcta
-    correcta=props_dict["param1"]
+    correcta=props_dict["clave"]
 
     #construccion de la respuesta
     mode= props_dict["mode"]
@@ -92,7 +92,7 @@ def executeChallenge():
 
 if __name__ == "__main__":
     #mode "parental" o "normal"
-    midict={"param1": "clavesecreta", "mode":"parental"}
+    midict={"clave": "clavesecreta", "mode":"parental"}
     init(midict)
     executeChallenge()
 
