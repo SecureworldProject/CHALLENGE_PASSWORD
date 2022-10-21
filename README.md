@@ -1,2 +1,63 @@
 # CHALLENGE_PASSWORD
-basic challenge with password conventional security
+This is a basic challenge that asks the pc user for a password to generate the challenge key. Note this means that it is focused in providing conventional security against the external threat.
+
+It allows two modes of execution:
+* Parental: checks the user input against the configured `parental_key`.
+* Non-parental: the user input is the challenge key result.
+
+
+
+
+## Requisites
+
+##### Python and the Challenge loader
+This challenge is written in python and therefore it requires Python version 3.10 or later and the challenge loader (`challenge_loader_python.dll`) to be able to execute inside securemirror.
+
+##### Module easygui
+In order to execute this challenge correctly, it is necessary to have `easygui` python module installed in the executing machine. This can be done with any of the following commands:
+`pip3 install easygui`
+`py -m pip install easygui`
+
+##### Module lock
+This challenge requires user interaction so it uses the lock mechanism. The `lock.py` file is provided in this same repository.
+
+
+
+
+## Configuration
+The value of the `"FileName"` field must be `"challenge_loader_python.dll"`.
+Inside `"Props"` field there must be several key-value pairs:
+* `"module_python"`: must contain the python module file name (without including ".py"). In this case: `"chpass"`.
+* `"validity_time"`: the validity time of the challenge in secconds (integer).
+* `"refresh_time"`: the time in secconds (integer) between automatic executions of the challenge.
+* `"mode"`: determines the mode of execution. The parental mode is selected if its value is `"parental"`. The non-parental mode is used otherwise.
+* `"parental_key"`: the key (string) with which the user input will be checked against to allow or not access if the parental mode is active. Not used in non-parental mode.
+
+Other fields like `"Description"` and `"Requirements"` are optional and merely informative.
+
+
+##### Example
+This is an example of the configuration of the challenge. This code would be inserted as a value in the array `"ChallengeList"` inside a challenge equivalence group.
+```json
+{
+	"FileName": "challenge_loader_python.dll",
+	"Description": "Loads a python challenge.",
+	"Props": {
+		"module_python": "chpass",
+		"validity_time": 3600,
+		"refresh_time": 3000,
+		"mode": "parental",
+		"parental_key": "1234"
+	},
+	"Requirements": "none"
+}
+```
+
+
+
+
+## How to use
+Copy `chpass.py` into the execution folder.
+Ensure that `lock.py` file is there. If it is not, copy it.
+Ensure that the loader (`challenge_loader_python.dll`) is there also.
+Finally, add the challenge configuration in the `config.json`.

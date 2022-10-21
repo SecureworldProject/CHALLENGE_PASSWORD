@@ -1,98 +1,83 @@
-from math import log10, sqrt
+### IMPORTS ###
 
-import os
-from pathlib import Path
-import time
-#para instalar el modulo easygui simplemente:
-#pip3 install easygui
-# o bien py -m pip install easygui
-import easygui 
+import easygui
 import lock
 
 
-# variables globales
-# ------------------
-props_dict={} 
-DEBUG_MODE=True
+
+
+### GLOBAL VARIABLES ###
+
+props_dict = {}
+DEBUG_MODE = True
+
+
+
+
+### FUNCTIONS ###
 
 def init(props):
     global props_dict
-    print("Python: Enter in init")
-    
-    #props es un diccionario
-    props_dict= props
+    print("Python: starting challenge init()")
+
+    # Save the properties (dictionary passed as parameter) in a global variable
+    props_dict = props
 
     return 0
-    """
-    res=executeChallenge()
-    #check len retornada 
-    if (res[1]>0):
-        return 0
-    else:
-        #no se ha podido ejecutar
-        return -1
-    """
 
 
 def executeChallenge():
-    print("Starting execute")
-    
-    
-    #mecanismo de lock BEGIN, para garantizar una sola interaccion con user a la vez
-    #-----------------------
+    print("Python: starting executeChallenge()")
+
+    # Get the lock (locking mechanism guarantees one user interaction at a time)
     lock.lockIN("chpass")
-    """
-    folder=os.environ['SECUREMIRROR_CAPTURES']
-    while os.path.exists(folder+"/"+"lock"):
-        time.sleep(1)
-    Path(folder+"/"+"lock").touch()
-    """
-    #pedimos password
-    clave = easygui.enterbox("enter password", "chpass", "")
 
-    #mecanismo lock out
-    lock.lockOUT("chpass")
-    """
-    if os.path.exists(folder+"/"+"lock"):
-        os.remove(folder+"/"+"lock")
-    """
-    #ahora comparamos con la correcta
-    correcta=props_dict["clave"]
+    # Ask the user for the password
+    user_input = askUserForPassword()
 
-    #construccion de la respuesta
-    mode= props_dict["mode"]
+    # Get the correct parental key from the properties dictionary (global variable)
+    parental_key = props_dict["parental_key"]
 
-    if (mode=="parental"):
-        for i in range (0,2): # 3 intentos        
-            if (clave==correcta):
-                cad="\0" #bytearray(0) #"%d"%(0)
+    # Get the mode from the properties dictionary (global variable)
+    mode = props_dict["mode"]
+
+    # Depending on the mode use the input as key or compare it with the parental key in the properties
+    if mode == "parental":
+        for i in range (0,2): # Allow 3 tries
+            if user_input == parental_key:
+                str_key = "\0"
                 break
             else:
-                clave = easygui.enterbox("enter password", "chpass", "")
-                
-        if (clave!=correcta):
-            cad="\1" #"%d"%(1)
-        else :
-            cad="\0" #"%d"%(0)
-            
-    else:#modo no parental
-        cad=clave
-    
-    key = bytes(cad,'utf-8')
-    key_size = len(key)
+                user_input = askUserForPassword()
 
-    result =(key, key_size)
-    print ("result:",result)
+        if user_input != parental_key:
+            str_key = "\1"
+        else:
+            str_key = "\0"
+
+    else:   # Non-parental mode
+        str_key = user_input
+
+    # Release the lock
+    lock.lockOUT("chpass")
+
+    # Convert the string key into bytes, get its size and put them together in a tuple: the result
+    key = bytes(str_key,'utf-8')
+    key_size = len(key)
+    result = (key, key_size)
+    print("Python: chpass result:", result)
+
     return result
 
 
+def askUserForPassword():
+    return easygui.enterbox("Enter the password", "chpass", "")
 
-    
 
 
+
+### MAIN ###
 if __name__ == "__main__":
-    #mode "parental" o "normal"
-    midict={"clave": "clavesecreta", "mode":"parental"}
+    midict = {"parental_key": "1234", "mode": "parental"}   # mode can be "parental" o "normal"
     init(midict)
     executeChallenge()
-
