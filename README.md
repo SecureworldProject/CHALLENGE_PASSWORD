@@ -56,7 +56,7 @@ In parental mode the key typed by user is compared with the right one: the "pare
 
 and this is another example for normal use (NOT parental). 
 In normal mode the key typed by user is the returned value. there is nothing to compare
-```
+```json
 {
 	"FileName": "challenge_loader_python.dll",
 	"Description": "Loads a python challenge.",
