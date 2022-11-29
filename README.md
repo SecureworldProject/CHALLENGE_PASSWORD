@@ -38,6 +38,7 @@ Other fields like `"Description"` and `"Requirements"` are optional and merely i
 
 ##### Example
 This is an example of the configuration of the challenge. This code would be inserted as a value in the array `"ChallengeList"` inside a challenge equivalence group.
+In parental mode the key typed by user is compared with the right one: the "parental key" parameter
 ```json
 {
 	"FileName": "challenge_loader_python.dll",
@@ -53,7 +54,22 @@ This is an example of the configuration of the challenge. This code would be ins
 }
 ```
 
-
+and this is another example for normal use (NOT parental). 
+In normal mode the key typed by user is the returned value. there is nothing to compare
+```
+{
+	"FileName": "challenge_loader_python.dll",
+	"Description": "Loads a python challenge.",
+	"Props": {
+		"module_python": "chpass",
+		"validity_time": 3600,
+		"refresh_time": 3000,
+		"mode": "normal",
+		"parental_key": "1234"
+	},
+	"Requirements": "none"
+}
+```
 
 
 ## How to use
