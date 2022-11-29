@@ -1,0 +1,12 @@
+{
+	"FileName": "challenge_loader_python.dll",
+	"Description": "Loads a python challenge.",
+	"Props": {
+		"module_python": "chpass",
+		"validity_time": 3600,
+		"refresh_time": 3000,
+		"mode": "normal",
+		"parental_key": "1234"
+	},
+	"Requirements": "none"
+}
