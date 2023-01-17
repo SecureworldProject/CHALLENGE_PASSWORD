@@ -1,6 +1,6 @@
 ### IMPORTS ###
 
-import easygui
+from tkinter import simpledialog
 import lock
 
 
@@ -71,7 +71,7 @@ def executeChallenge():
 
 
 def askUserForPassword():
-    return easygui.enterbox("Enter the password", "chpass", "")
+    return simpledialog.askstring("chpass", "Enter the password:")
 
 
 
