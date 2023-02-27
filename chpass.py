@@ -56,7 +56,7 @@ def executeChallenge():
             str_key = "\0"
 
     else:   # Non-parental mode
-        str_key = user_input
+        str_key = user_input or "\0"
 
     # Release the lock
     lock.lockOUT("chpass")
