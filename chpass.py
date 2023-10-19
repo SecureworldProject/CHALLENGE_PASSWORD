@@ -1,7 +1,6 @@
 ### IMPORTS ###
 
 from tkinter import simpledialog
-import lock
 
 
 
@@ -29,9 +28,6 @@ def init(props):
 def executeChallenge():
     print("Python: starting executeChallenge()")
 
-    # Get the lock (locking mechanism guarantees one user interaction at a time)
-    lock.lockIN("chpass")
-
     # Ask the user for the password
     user_input = askUserForPassword()
 
@@ -58,9 +54,6 @@ def executeChallenge():
     else:   # Non-parental mode
         str_key = user_input or "\0"
 
-    # Release the lock
-    lock.lockOUT("chpass")
-
     # Convert the string key into bytes, get its size and put them together in a tuple: the result
     key = bytes(str_key,'utf-8')
     key_size = len(key)
@@ -77,6 +70,7 @@ def askUserForPassword():
 
 
 ### MAIN ###
+
 if __name__ == "__main__":
     midict = {"parental_key": "1234", "mode": "parental"}   # mode can be "parental" o "normal"
     init(midict)

@@ -13,14 +13,6 @@ It allows two modes of execution:
 ##### Python and the Challenge loader
 This challenge is written in python and therefore it requires Python version 3.10 or later and the challenge loader (`challenge_loader_python.dll`) to be able to execute inside securemirror.
 
-##### Module easygui
-In order to execute this challenge correctly, it is necessary to have `easygui` python module installed in the executing machine. This can be done with any of the following commands:
-`pip3 install easygui`
-`py -m pip install easygui`
-
-##### Module lock
-This challenge requires user interaction so it uses the lock mechanism. The `lock.py` file is provided in this same repository.
-
 
 
 
@@ -72,8 +64,9 @@ In normal mode the key typed by user is the returned value. there is nothing to 
 ```
 
 
+
+
 ## How to use
 Copy `chpass.py` into the execution folder.
-Ensure that `lock.py` file is there. If it is not, copy it.
 Ensure that the loader (`challenge_loader_python.dll`) is there also.
 Finally, add the challenge configuration in the `config.json`.
